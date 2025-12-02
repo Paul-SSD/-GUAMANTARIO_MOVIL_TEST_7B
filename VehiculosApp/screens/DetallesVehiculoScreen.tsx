@@ -6,14 +6,16 @@ import { ButtonRFC } from "../components/ButtonRFC";
 type DetallesVehiculoScreenProps = {
   vehiculo: Vehiculo;
   onChange: (field: keyof Vehiculo, value: string) => void;
-  onPress: () => void;
+  onPressPrevious: () => void;
+  onPressNext: () => void;
 };
 
 // crear la pantalla de detalles del vehiculo
 export const DetallesVehiculoScreen = ({
   vehiculo,
   onChange,
-  onPress,
+  onPressPrevious,
+  onPressNext,
 }: DetallesVehiculoScreenProps) => {
   return (
     <View style={styles.container}>
@@ -23,33 +25,29 @@ export const DetallesVehiculoScreen = ({
         label={"Placa"}
         placeholder="Ingrese el numero de la placa"
         onChangeText={(value: string) => onChange("placa", value)}
-        onPress={onPress}
       ></InputTextRFC>
 
       <InputTextRFC
         label={"Propietario"}
         placeholder="Ingrese el nombre del propietario"
         onChangeText={(value: string) => onChange("propietario", value)}
-        onPress={onPress}
       ></InputTextRFC>
 
       <InputTextRFC
         label={"Anio"}
         placeholder="Ingrese el anio del vehiculo"
         onChangeText={(value: string) => onChange("anio", value)}
-        onPress={onPress}
       ></InputTextRFC>
 
       <InputTextRFC
         label={"Tipo de Gasolina"}
         placeholder="Ingrese el tipo de gasolina"
         onChangeText={(value: string) => onChange("tipo_gasolina", value)}
-        onPress={onPress}
       ></InputTextRFC>
 
-      <ButtonRFC label={"Regresar"} onPress={onPress}></ButtonRFC>
+      <ButtonRFC label={"Regresar"} onPress={onPressPrevious}></ButtonRFC>
 
-      <ButtonRFC label={"Continuar"} onPress={onPress}></ButtonRFC>
+      <ButtonRFC label={"Continuar"} onPress={onPressNext}></ButtonRFC>
     </View>
   );
 };

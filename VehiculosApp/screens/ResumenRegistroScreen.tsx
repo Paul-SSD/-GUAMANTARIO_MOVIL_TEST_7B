@@ -4,13 +4,15 @@ import { ButtonRFC } from "../components/ButtonRFC";
 
 type ResumenRegistroScreenProps = {
   vehiculo: Vehiculo;
-  onPress: () => void;
+  onPressPrevious: () => void;
+  onPressRegister: () => void;
 };
 
 // se crea la vista para mostrar el resumen del registro del vehiculo
 export const ResumenRegistroScreen = ({
   vehiculo,
-  onPress,
+  onPressPrevious,
+  onPressRegister,
 }: ResumenRegistroScreenProps) => {
   return (
     <View style={styles.containe}>
@@ -22,8 +24,8 @@ export const ResumenRegistroScreen = ({
       <Text style={styles.row}> Anio: {vehiculo.anio}</Text>
       <Text style={styles.row}>Tipo de Gasolina: {vehiculo.tipo_gasolina}</Text>
 
-      <ButtonRFC label={"Regresar"} onPress={onPress}></ButtonRFC>
-      <ButtonRFC label={"Registrar"} onPress={onPress}></ButtonRFC>
+      <ButtonRFC label={"Regresar"} onPress={onPressPrevious}></ButtonRFC>
+      <ButtonRFC label={"Registrar"} onPress={onPressRegister}></ButtonRFC>
     </View>
   );
 };
