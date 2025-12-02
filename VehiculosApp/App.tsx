@@ -1,16 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { useState } from 'react';
-import { useVehiculoForm } from './hooks/useVehiculoForm';
-import { VehiculoFormStep } from './constants/VehiculoFormStep';
-import { VehiculoInfoScreen } from './screens/VehiculoInfoScreen';
-import { DetallesVehiculoScreen } from './screens/DetallesVehiculoScreen';
-import { ResumenRegistroScreen } from './screens/ResumenRegistroScreen';
-import { VehiculosRegistradosScreen } from './screens/VehiculosRegistradosScreen';
-import { Vehiculo } from './models/Vehiculo';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { useVehiculoForm } from "./hooks/useVehiculoForm";
+import { VehiculoFormStep } from "./constants/VehiculoFormStep";
+import { VehiculoInfoScreen } from "./screens/VehiculoInfoScreen";
+import { DetallesVehiculoScreen } from "./screens/DetallesVehiculoScreen";
+import { ResumenRegistroScreen } from "./screens/ResumenRegistroScreen";
+import { VehiculosRegistradosScreen } from "./screens/VehiculosRegistradosScreen";
+import { Vehiculo } from "./models/Vehiculo";
 
 export default function App() {
-  const { vehiculo, step, goToNextStep, goToPreviousStep, updateField, resetForm, saveVehiculo } = useVehiculoForm();
+  const {
+    vehiculo,
+    step,
+    goToNextStep,
+    goToPreviousStep,
+    updateField,
+    resetForm,
+    saveVehiculo,
+  } = useVehiculoForm();
   const [vehiculos, setVehiculos] = useState<Vehiculo[]>([]);
 
   // manejadores de eventos para cada pantalla
@@ -44,7 +52,6 @@ export default function App() {
     setVehiculos(vehiculos);
   };
 
-  
   const renderCurrentStep = () => {
     switch (step) {
       case VehiculoFormStep.INITIAL_STEP:
@@ -86,7 +93,15 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {renderCurrentStep()}
+      <View style={styles.header}>
+        <Text style={styles.title}>REGISTRO DE VEHÍCULOS</Text>
+        <Text style={styles.stepIndicator}>
+          Paso {step + 1} de {VehiculoFormStep.LAST_STEP + 1}
+        </Text>
+      </View>
+      <View style={styles.content}>
+        {renderCurrentStep()}
+      </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -95,6 +110,37 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#ecf0f5",
+  },
+  header: {
+    paddingTop: 24,
+    paddingBottom: 20,
+    paddingHorizontal: 24,
+    backgroundColor: "#2c3e50",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#2c3e50",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 12,
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: "900",
+    color: "#ffffff",
+    marginBottom: 8,
+    letterSpacing: 1,
+    textTransform: "uppercase",
+  },
+  stepIndicator: {
+    fontSize: 12,
+    color: "#bdc3c7",
+    fontWeight: "700",
+    letterSpacing: 0.5,
+  },
+  content: {
+    flex: 1,
+    padding: 20,
   },
 });

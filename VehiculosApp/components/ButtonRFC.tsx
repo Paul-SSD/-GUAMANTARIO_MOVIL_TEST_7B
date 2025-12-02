@@ -7,12 +7,21 @@ import {
 
 type ButtonRFCProps = TouchableOpacityProps & {
   label: string;
+  color?: string;
 };
 
 // creacion del componente reutilizable de boton
-export const ButtonRFC = ({ label, style, ...props }: ButtonRFCProps) => {
+export const ButtonRFC = ({
+  label,
+  color = "#007bff",
+  style,
+  ...props
+}: ButtonRFCProps) => {
   return (
-    <TouchableOpacity {...props} style={[styles.button, style]}>
+    <TouchableOpacity
+      {...props}
+      style={[{ backgroundColor: color }, styles.button, style]}
+    >
       <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
   );
@@ -20,7 +29,7 @@ export const ButtonRFC = ({ label, style, ...props }: ButtonRFCProps) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#007bff",
+    marginTop: 16,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 8,

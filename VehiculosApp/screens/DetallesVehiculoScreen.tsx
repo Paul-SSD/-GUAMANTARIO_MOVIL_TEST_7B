@@ -19,35 +19,50 @@ export const DetallesVehiculoScreen = ({
 }: DetallesVehiculoScreenProps) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Detalles del Vehiculo</Text>
+      <View style={styles.card}>
+        <Text style={styles.title}>Detalles del Vehículo</Text>
+        <View style={styles.divider} />
 
-      <InputTextRFC
-        label={"Placa"}
-        placeholder="Ingrese el numero de la placa"
-        onChangeText={(value: string) => onChange("placa", value)}
-      ></InputTextRFC>
+        <InputTextRFC
+          label={"Placa"}
+          placeholder="Ingrese el numero de la placa"
+          onChangeText={(value: string) => onChange("placa", value)}
+        ></InputTextRFC>
 
-      <InputTextRFC
-        label={"Propietario"}
-        placeholder="Ingrese el nombre del propietario"
-        onChangeText={(value: string) => onChange("propietario", value)}
-      ></InputTextRFC>
+        <InputTextRFC
+          label={"Propietario"}
+          placeholder="Ingrese el nombre del propietario"
+          onChangeText={(value: string) => onChange("propietario", value)}
+        ></InputTextRFC>
 
-      <InputTextRFC
-        label={"Anio"}
-        placeholder="Ingrese el anio del vehiculo"
-        onChangeText={(value: string) => onChange("anio", value)}
-      ></InputTextRFC>
+        <InputTextRFC
+          label={"Año"}
+          placeholder="Ingrese el año del vehiculo"
+          onChangeText={(value: string) => onChange("anio", value)}
+        ></InputTextRFC>
 
-      <InputTextRFC
-        label={"Tipo de Gasolina"}
-        placeholder="Ingrese el tipo de gasolina"
-        onChangeText={(value: string) => onChange("tipo_gasolina", value)}
-      ></InputTextRFC>
+        <InputTextRFC
+          label={"Tipo de Gasolina"}
+          placeholder="Ingrese el tipo de gasolina"
+          onChangeText={(value: string) => onChange("tipo_gasolina", value)}
+        ></InputTextRFC>
 
-      <ButtonRFC label={"Regresar"} onPress={onPressPrevious}></ButtonRFC>
+        <View style={styles.buttonGroup}>
+          <ButtonRFC
+            label={"Regresar"}
+            onPress={onPressPrevious}
+            color={"#e74c3c"}
+            style={styles.buttonHalf}
+          ></ButtonRFC>
 
-      <ButtonRFC label={"Continuar"} onPress={onPressNext}></ButtonRFC>
+          <ButtonRFC
+            label={"Continuar"}
+            onPress={onPressNext}
+            color={"#3498db"}
+            style={styles.buttonHalf}
+          ></ButtonRFC>
+        </View>
+      </View>
     </View>
   );
 };
@@ -55,12 +70,42 @@ export const DetallesVehiculoScreen = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#f5f5f5",
+    padding: 20,
+    backgroundColor: "#ecf0f5",
+    justifyContent: "center",
+  },
+  card: {
+    backgroundColor: "#ffffff",
+    borderRadius: 20,
+    padding: 32,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: "#dfe6e9",
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
+    fontSize: 26,
+    fontWeight: "900",
+    marginBottom: 8,
+    color: "#1a1a1a",
+    letterSpacing: 0.3,
+  },
+  divider: {
+    height: 3,
+    backgroundColor: "#3498db",
+    marginBottom: 28,
+    borderRadius: 2,
+    width: "30%",
+  },
+  buttonGroup: {
+    flexDirection: "row",
+    gap: 14,
+    marginTop: 28,
+  },
+  buttonHalf: {
+    flex: 1,
   },
 });

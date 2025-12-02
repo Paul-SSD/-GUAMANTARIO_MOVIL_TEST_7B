@@ -7,12 +7,10 @@ type VehiculosRegistradosScreenProps = {
   onPress: () => void;
 };
 
-// pantalla para mostrar todos los vehiculos registrados en una tabla
 export const VehiculosRegistradosScreen = ({
   vehiculos,
   onPress,
 }: VehiculosRegistradosScreenProps) => {
-  // renderizar cada fila de la tabla
   const renderVehiculoRow = ({ item }: { item: Vehiculo }) => (
     <View style={styles.tableRow}>
       <Text style={styles.tableCell}>{item.placa}</Text>
@@ -24,31 +22,39 @@ export const VehiculosRegistradosScreen = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Vehículos Registrados</Text>
-      // columnas de la tabla
-      <View style={styles.tableHeader}>
-        <Text style={[styles.tableCell, styles.headerText]}>Placa</Text>
-        <Text style={[styles.tableCell, styles.headerText]}>Dueño</Text>
-        <Text style={[styles.tableCell, styles.headerText]}>Marca</Text>
-        <Text style={[styles.tableCell, styles.headerText]}>Modelo</Text>
-      </View>
-      // mostrar los vehiculos registrados
-      {vehiculos.length > 0 ? (
-        <FlatList
-          data={vehiculos}
-          renderItem={renderVehiculoRow}
-          keyExtractor={(item, index) => `${item.placa}-${index}`}
-          scrollEnabled={false}
-          style={styles.table}
+      <View style={styles.card}>
+        <Text style={styles.title}>Vehículos Registrados</Text>
+        <View style={styles.divider} />
+
+        {/* Encabezado de la tabla */}
+        <View style={styles.tableHeader}>
+          <Text style={[styles.tableCell, styles.headerText]}>Placa</Text>
+          <Text style={[styles.tableCell, styles.headerText]}>Dueño</Text>
+          <Text style={[styles.tableCell, styles.headerText]}>Marca</Text>
+          <Text style={[styles.tableCell, styles.headerText]}>Modelo</Text>
+        </View>
+
+        {/* Lista de vehículos */}
+        {vehiculos.length > 0 ? (
+          <FlatList
+            data={vehiculos}
+            renderItem={renderVehiculoRow}
+            keyExtractor={(item, index) => `${item.placa}-${index}`}
+            scrollEnabled={false}
+            style={styles.table}
+          />
+        ) : (
+          <Text style={styles.emptyMessage}>No hay vehículos registrados</Text>
+        )}
+
+        {/* Botón para registrar otro vehículo */}
+        <ButtonRFC 
+          label={"Registrar Otro"} 
+          onPress={onPress}
+          style={styles.button}
+          color={"#3498db"}
         />
-      ) : (
-        <Text style={styles.emptyMessage}>No hay vehículos registrados</Text>
-      )}
-      <ButtonRFC
-        label={"Registrar Otro"}
-        onPress={onPress}
-        style={styles.button}
-      />
+      </View>
     </View>
   );
 };
@@ -56,53 +62,89 @@ export const VehiculosRegistradosScreen = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#f5f5f5",
+    padding: 20,
+    backgroundColor: "#ecf0f5",
+  },
+  card: {
+    backgroundColor: "#ffffff",
+    borderRadius: 20,
+    padding: 24,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: "#dfe6e9",
+    flex: 1,
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
+    fontSize: 26,
+    fontWeight: "900",
+    marginBottom: 8,
+    color: "#1a1a1a",
     textAlign: "center",
+    letterSpacing: 0.3,
+  },
+  divider: {
+    height: 3,
+    backgroundColor: "#3498db",
+    marginBottom: 20,
+    borderRadius: 2,
+    width: "30%",
+    alignSelf: "center",
   },
   tableHeader: {
     flexDirection: "row",
-    backgroundColor: "#007bff",
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    paddingVertical: 12,
+    backgroundColor: "#2c3e50",
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+    paddingVertical: 16,
     marginBottom: 0,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 3,
   },
   table: {
     marginBottom: 20,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
+    borderBottomLeftRadius: 14,
+    borderBottomRightRadius: 14,
     overflow: "hidden",
+    borderBottomWidth: 2,
+    borderBottomColor: "#3498db",
   },
   tableRow: {
     flexDirection: "row",
     backgroundColor: "#ffffff",
     borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-    paddingVertical: 12,
+    borderBottomColor: "#ecf0f5",
+    paddingVertical: 14,
   },
   tableCell: {
     flex: 1,
     paddingHorizontal: 12,
     fontSize: 14,
     textAlign: "center",
+    color: "#2c3e50",
+    fontWeight: "600",
   },
   headerText: {
     color: "#ffffff",
-    fontWeight: "bold",
-    fontSize: 14,
+    fontWeight: "900",
+    fontSize: 13,
+    letterSpacing: 0.3,
+    textTransform: "uppercase",
   },
   emptyMessage: {
     textAlign: "center",
     fontSize: 16,
-    color: "#999999",
-    marginVertical: 20,
-    marginBottom: 30,
+    color: "#95a5a6",
+    marginVertical: 32,
+    marginBottom: 32,
+    fontWeight: "600",
+    letterSpacing: 0.3,
   },
   button: {
     marginTop: "auto",
