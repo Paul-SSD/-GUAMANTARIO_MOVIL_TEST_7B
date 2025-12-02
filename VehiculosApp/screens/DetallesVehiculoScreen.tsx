@@ -34,24 +34,28 @@ export const DetallesVehiculoScreen = ({
         <InputTextRFC
           label={"Placa"}
           placeholder="Ingrese el numero de la placa"
+          value={vehiculo.placa}
           onChangeText={(value: string) => onChange("placa", value)}
         ></InputTextRFC>
 
         <InputTextRFC
           label={"Propietario"}
           placeholder="Ingrese el nombre del propietario"
+          value={vehiculo.propietario}
           onChangeText={(value: string) => onChange("propietario", value)}
         ></InputTextRFC>
 
         <InputTextRFC
           label={"Año"}
           placeholder="Ingrese el año del vehiculo"
+          value={vehiculo.anio === 0 ? "" : String(vehiculo.anio)}
           onChangeText={(value: string) => onChange("anio", value)}
         ></InputTextRFC>
 
         <InputTextRFC
           label={"Tipo de Gasolina"}
           placeholder="Ingrese el tipo de gasolina"
+          value={vehiculo.tipo_gasolina}
           onChangeText={(value: string) => onChange("tipo_gasolina", value)}
         ></InputTextRFC>
 
