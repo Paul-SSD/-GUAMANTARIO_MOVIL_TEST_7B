@@ -17,6 +17,14 @@ export const DetallesVehiculoScreen = ({
   onPressPrevious,
   onPressNext,
 }: DetallesVehiculoScreenProps) => {
+  // validar que todos los campos requeridos esten llenos
+  const isFormValid =
+    vehiculo.placa.trim() !== "" &&
+    vehiculo.propietario.trim() !== "" &&
+    vehiculo.anio !== 0 &&
+    String(vehiculo.anio).trim() !== "" &&
+    vehiculo.tipo_gasolina.trim() !== "";
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -60,6 +68,7 @@ export const DetallesVehiculoScreen = ({
             onPress={onPressNext}
             color={"#3498db"}
             style={styles.buttonHalf}
+            disabled={!isFormValid}
           ></ButtonRFC>
         </View>
       </View>

@@ -15,6 +15,9 @@ export const VehiculoInfoScreen = ({
   onChange,
   onPress,
 }: VehiculoInfoScreenProps) => {
+  // validar que los campos requeridos esten llenos
+  const isFormValid = vehiculo.marca.trim() !== "" && vehiculo.modelo.trim() !== "";
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -36,7 +39,12 @@ export const VehiculoInfoScreen = ({
         ></InputTextRFC>
 
         <View style={styles.buttonContainer}>
-          <ButtonRFC label={"Continuar"} onPress={onPress} color={"#3498db"}></ButtonRFC>
+          <ButtonRFC 
+            label={"Continuar"} 
+            onPress={onPress} 
+            color={"#3498db"}
+            disabled={!isFormValid}
+          ></ButtonRFC>
         </View>
       </View>
     </View>

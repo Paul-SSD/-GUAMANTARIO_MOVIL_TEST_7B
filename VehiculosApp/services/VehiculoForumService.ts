@@ -25,9 +25,12 @@ export const VehiculoFormService = {
   },
 
   // para actualizar un campo del vehiculo
-  updateField:(vehiculo:Vehiculo, field:keyof Vehiculo, value:string)=>({
-    ...vehiculo,
-    [field]:value
-  })
+  updateField:(vehiculo:Vehiculo, field:keyof Vehiculo, value:string)=>{
+    const updatedValue = field === "anio" ? parseInt(value, 10) || 0 : value;
+    return {
+      ...vehiculo,
+      [field]: updatedValue
+    }
+  }
 
 };
