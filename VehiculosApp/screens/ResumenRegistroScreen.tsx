@@ -13,8 +13,8 @@ export const ResumenRegistroScreen = ({
   onPress,
 }: ResumenRegistroScreenProps) => {
   return (
-    <View>
-      <Text>Resumen del Registro</Text>
+    <View style={styles.containe}>
+      <Text style={styles.title}>Resumen del Registro</Text>
       <Text style={styles.row}>Marca:{vehiculo.marca}</Text>
       <Text style={styles.row}>Modelo: {vehiculo.modelo}</Text>
       <Text style={styles.row}> Placa: {vehiculo.placa}</Text>
