@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 import { useVehiculoForm } from "./hooks/useVehiculoForm";
 import { VehiculoFormStep } from "./constants/VehiculoFormStep";
@@ -18,6 +18,7 @@ export default function App() {
     updateField,
     resetForm,
     saveVehiculo,
+    createVehiculo,
   } = useVehiculoForm();
   const [vehiculos, setVehiculos] = useState<Vehiculo[]>([]);
 
@@ -38,12 +39,14 @@ export default function App() {
     goToPreviousStep();
   };
 
-  const handleResumenRegistroRegister = () => {
-    // guardar el vehiculo en el array
-    const nuevosVehiculos = saveVehiculo(vehiculos);
-    setVehiculos(nuevosVehiculos);
-    // ir a la pantalla final
-    goToNextStep();
+  const handleResumenRegistroRegister = async () => {
+    try {
+      const vehiculoCreado = await createVehiculo();
+      setVehiculos((prev) => [...prev, vehiculoCreado]);
+      goToNextStep();
+    } catch (error) {
+      Alert.alert("Error", "No se pudo registrar el vehiculo. Intenta nuevamente.");
+    }
   };
 
   const handleRegistrarOtro = () => {

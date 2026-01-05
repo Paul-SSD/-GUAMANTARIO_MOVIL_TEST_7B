@@ -36,6 +36,11 @@ export const useVehiculoForm = () => {
     },
     [vehiculo]
   );
+
+  // logica para registrar el vehiculo en el backend
+  const createVehiculo = useCallback(async () => {
+    return VehiculoFormService.createVehiculo(vehiculo);
+  }, [vehiculo]);
   return {
     vehiculo,
     step,
@@ -44,5 +49,6 @@ export const useVehiculoForm = () => {
     updateField,
     resetForm,
     saveVehiculo,
+    createVehiculo,
   };
 };

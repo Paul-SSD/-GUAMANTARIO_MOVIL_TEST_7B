@@ -2,6 +2,8 @@ import { VehiculoFormStep } from "../constants/VehiculoFormStep";
 import { createEmptyVehiculo } from "../factory/VehiculoFactory";
 import { Vehiculo } from "../models/Vehiculo";
 
+const API_URL = "http://localhost:8080/v1/vehicules";
+
 // capa de logica del negocio para el formulario de vehiculos
 export const VehiculoFormService = {
   createInitialState: () => ({
@@ -19,8 +21,42 @@ export const VehiculoFormService = {
     return Math.max(currentStep - 1, VehiculoFormStep.INITIAL_STEP);
   },
 
+  // llamada POST para crear un vehiculo en el backend
+  createVehiculo: async (vehiculo: Vehiculo): Promise<Vehiculo> => {
+    const payload = {
+      brand: vehiculo.marca,
+      model: vehiculo.modelo,
+      plate: vehiculo.placa,
+      year: vehiculo.anio,
+      fuelType: vehiculo.tipo_gasolina,
+      owner: vehiculo.propietario,
+    };
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error("No se pudo registrar el vehiculo");
+    }
+
+    const data = await response.json();
+
+    return {
+      id: data.id,
+      marca: data.brand,
+      modelo: data.model,
+      placa: data.plate,
+      propietario: data.owner,
+      anio: data.year,
+      tipo_gasolina: data.fuelType,
+    };
+  },
+
   // para guardar el vehiculo en un array
-  saveVehiculo: (vehiculos: any[], vehiculo: any) => {
+  saveVehiculo: (vehiculos: Vehiculo[], vehiculo: Vehiculo) => {
     return [...vehiculos, vehiculo];
   },
 
