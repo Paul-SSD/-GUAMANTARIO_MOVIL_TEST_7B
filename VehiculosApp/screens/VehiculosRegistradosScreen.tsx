@@ -1,23 +1,34 @@
-import { Text, View, StyleSheet, ScrollView, FlatList } from "react-native";
+import { Text, View, StyleSheet, ScrollView, FlatList, TouchableOpacity } from "react-native";
 import { Vehiculo } from "../models/Vehiculo";
 import { ButtonRFC } from "../components/ButtonRFC";
+import { useState } from "react";
 
 type VehiculosRegistradosScreenProps = {
   vehiculos: Vehiculo[];
   onPress: () => void;
+  onDelete: (id: string) => void;
 };
 
 export const VehiculosRegistradosScreen = ({
   vehiculos,
   onPress,
+  onDelete,
 }: VehiculosRegistradosScreenProps) => {
+  const [selectedVehiculo, setSelectedVehiculo] = useState<string | null>(null);
+
   const renderVehiculoRow = ({ item }: { item: Vehiculo }) => (
-    <View style={styles.tableRow}>
+    <TouchableOpacity 
+      style={[
+        styles.tableRow,
+        selectedVehiculo === item.id && styles.selectedRow
+      ]}
+      onPress={() => setSelectedVehiculo(item.id)}
+    >
       <Text style={styles.tableCell}>{item.placa}</Text>
       <Text style={styles.tableCell}>{item.propietario}</Text>
       <Text style={styles.tableCell}>{item.marca}</Text>
       <Text style={styles.tableCell}>{item.modelo}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -47,13 +58,22 @@ export const VehiculosRegistradosScreen = ({
           <Text style={styles.emptyMessage}>No hay vehículos registrados</Text>
         )}
 
-        {/* Botón para registrar otro vehículo */}
-        <ButtonRFC 
-          label={"Registrar Otro"} 
-          onPress={onPress}
-          style={styles.button}
-          color={"#3498db"}
-        />
+        {/* Botones para registrar otro vehículo y eliminar */}
+        <View style={styles.buttonGroup}>
+          <ButtonRFC 
+            label={"Registrar Otro"} 
+            onPress={onPress}
+            style={styles.buttonHalf}
+            color={"#27ae60"}
+          />
+          <ButtonRFC 
+            label={"Eliminar"} 
+            onPress={() => selectedVehiculo && onDelete(selectedVehiculo)}
+            style={styles.buttonHalf}
+            color={"#e74c3c"}
+            disabled={!selectedVehiculo}
+          />
+        </View>
       </View>
     </View>
   );
@@ -122,6 +142,11 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ecf0f5",
     paddingVertical: 14,
   },
+  selectedRow: {
+    backgroundColor: "#e3f2fd",
+    borderLeftWidth: 4,
+    borderLeftColor: "#3498db",
+  },
   tableCell: {
     flex: 1,
     paddingHorizontal: 12,
@@ -146,7 +171,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     letterSpacing: 0.3,
   },
-  button: {
+  buttonGroup: {
+    flexDirection: "row",
+    gap: 14,
     marginTop: "auto",
+  },
+  buttonHalf: {
+    flex: 1,
   },
 });

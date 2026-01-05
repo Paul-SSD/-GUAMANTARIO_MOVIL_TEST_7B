@@ -55,6 +55,17 @@ export const VehiculoFormService = {
     };
   },
 
+  // llamada DELETE para eliminar un vehiculo en el backend
+  deleteVehiculo: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok && response.status !== 204) {
+      throw new Error("No se pudo eliminar el vehiculo");
+    }
+  },
+
   // para guardar el vehiculo en un array
   saveVehiculo: (vehiculos: Vehiculo[], vehiculo: Vehiculo) => {
     return [...vehiculos, vehiculo];

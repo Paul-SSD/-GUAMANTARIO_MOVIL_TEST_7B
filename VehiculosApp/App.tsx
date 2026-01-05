@@ -19,6 +19,7 @@ export default function App() {
     resetForm,
     saveVehiculo,
     createVehiculo,
+    deleteVehiculo,
   } = useVehiculoForm();
   const [vehiculos, setVehiculos] = useState<Vehiculo[]>([]);
 
@@ -55,6 +56,15 @@ export default function App() {
     setVehiculos(vehiculos);
   };
 
+  const handleDeleteVehiculo = async (id: string) => {
+    try {
+      await deleteVehiculo(id);
+      setVehiculos((prev) => prev.filter((v) => v.id !== id));
+    } catch (error) {
+      Alert.alert("Error", "No se pudo eliminar el vehiculo. Intenta nuevamente.");
+    }
+  };
+
   const renderCurrentStep = () => {
     switch (step) {
       case VehiculoFormStep.INITIAL_STEP:
@@ -87,6 +97,7 @@ export default function App() {
           <VehiculosRegistradosScreen
             vehiculos={vehiculos}
             onPress={handleRegistrarOtro}
+            onDelete={handleDeleteVehiculo}
           />
         );
       default:
