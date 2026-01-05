@@ -7,12 +7,14 @@ type VehiculosRegistradosScreenProps = {
   vehiculos: Vehiculo[];
   onPress: () => void;
   onDelete: (id: string) => void;
+  onUpdate: (id: string) => void;
 };
 
 export const VehiculosRegistradosScreen = ({
   vehiculos,
   onPress,
   onDelete,
+  onUpdate,
 }: VehiculosRegistradosScreenProps) => {
   const [selectedVehiculo, setSelectedVehiculo] = useState<string | null>(null);
 
@@ -63,13 +65,20 @@ export const VehiculosRegistradosScreen = ({
           <ButtonRFC 
             label={"Registrar Otro"} 
             onPress={onPress}
-            style={styles.buttonHalf}
+            style={styles.buttonThird}
             color={"#27ae60"}
+          />
+          <ButtonRFC 
+            label={"Actualizar"} 
+            onPress={() => selectedVehiculo && onUpdate(selectedVehiculo)}
+            style={styles.buttonThird}
+            color={"#3498db"}
+            disabled={!selectedVehiculo}
           />
           <ButtonRFC 
             label={"Eliminar"} 
             onPress={() => selectedVehiculo && onDelete(selectedVehiculo)}
-            style={styles.buttonHalf}
+            style={styles.buttonThird}
             color={"#e74c3c"}
             disabled={!selectedVehiculo}
           />
@@ -176,7 +185,7 @@ const styles = StyleSheet.create({
     gap: 14,
     marginTop: "auto",
   },
-  buttonHalf: {
+  buttonThird: {
     flex: 1,
   },
 });

@@ -66,6 +66,40 @@ export const VehiculoFormService = {
     }
   },
 
+  // llamada PUT para actualizar un vehiculo en el backend
+  updateVehiculo: async (vehiculo: Vehiculo): Promise<Vehiculo> => {
+    const payload = {
+      brand: vehiculo.marca,
+      model: vehiculo.modelo,
+      plate: vehiculo.placa,
+      year: vehiculo.anio,
+      fuelType: vehiculo.tipo_gasolina,
+      owner: vehiculo.propietario,
+    };
+
+    const response = await fetch(`${API_URL}/${vehiculo.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error("No se pudo actualizar el vehiculo");
+    }
+
+    const data = await response.json();
+
+    return {
+      id: data.id,
+      marca: data.brand,
+      modelo: data.model,
+      placa: data.plate,
+      propietario: data.owner,
+      anio: data.year,
+      tipo_gasolina: data.fuelType,
+    };
+  },
+
   // para guardar el vehiculo en un array
   saveVehiculo: (vehiculos: Vehiculo[], vehiculo: Vehiculo) => {
     return [...vehiculos, vehiculo];

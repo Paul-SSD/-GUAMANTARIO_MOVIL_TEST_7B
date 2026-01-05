@@ -47,6 +47,11 @@ export const useVehiculoForm = () => {
     return VehiculoFormService.deleteVehiculo(id);
   }, []);
 
+  // logica para actualizar un vehiculo en el backend
+  const updateVehiculo = useCallback(async (vehiculoToUpdate: Vehiculo) => {
+    return VehiculoFormService.updateVehiculo(vehiculoToUpdate);
+  }, []);
+
   return {
     vehiculo,
     step,
@@ -57,5 +62,6 @@ export const useVehiculoForm = () => {
     saveVehiculo,
     createVehiculo,
     deleteVehiculo,
+    updateVehiculo,
   };
 };

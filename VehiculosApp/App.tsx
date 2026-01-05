@@ -7,6 +7,7 @@ import { VehiculoInfoScreen } from "./screens/VehiculoInfoScreen";
 import { DetallesVehiculoScreen } from "./screens/DetallesVehiculoScreen";
 import { ResumenRegistroScreen } from "./screens/ResumenRegistroScreen";
 import { VehiculosRegistradosScreen } from "./screens/VehiculosRegistradosScreen";
+import { UpdateVehiculoScreen } from "./screens/UpdateVehiculoScreen";
 import { Vehiculo } from "./models/Vehiculo";
 
 export default function App() {
@@ -20,8 +21,37 @@ export default function App() {
     saveVehiculo,
     createVehiculo,
     deleteVehiculo,
+    updateVehiculo,
   } = useVehiculoForm();
   const [vehiculos, setVehiculos] = useState<Vehiculo[]>([]);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [vehiculoToUpdate, setVehiculoToUpdate] = useState<Vehiculo | null>(null);
+
+  const handleOpenUpdateModal = (id: string) => {
+    const vehiculoEncontrado = vehiculos.find((v) => v.id === id);
+    if (vehiculoEncontrado) {
+      setVehiculoToUpdate(vehiculoEncontrado);
+      setShowUpdateModal(true);
+    }
+  };
+
+  const handleCancelUpdate = () => {
+    setShowUpdateModal(false);
+    setVehiculoToUpdate(null);
+  };
+
+  const handleUpdateVehiculo = async (vehiculoActualizado: Vehiculo) => {
+    try {
+      const vehiculoUpdated = await updateVehiculo(vehiculoActualizado);
+      setVehiculos((prev) =>
+        prev.map((v) => (v.id === vehiculoUpdated.id ? vehiculoUpdated : v))
+      );
+      setShowUpdateModal(false);
+      setVehiculoToUpdate(null);
+    } catch (error) {
+      Alert.alert("Error", "No se pudo actualizar el vehiculo. Intenta nuevamente.");
+    }
+  };
 
   // manejadores de eventos para cada pantalla
   const handleVehiculoInfoNext = () => {
@@ -94,11 +124,22 @@ export default function App() {
         );
       case VehiculoFormStep.LAST_STEP:
         return (
-          <VehiculosRegistradosScreen
-            vehiculos={vehiculos}
-            onPress={handleRegistrarOtro}
-            onDelete={handleDeleteVehiculo}
-          />
+          <>
+            <VehiculosRegistradosScreen
+              vehiculos={vehiculos}
+              onPress={handleRegistrarOtro}
+              onDelete={handleDeleteVehiculo}
+              onUpdate={handleOpenUpdateModal}
+            />
+            {vehiculoToUpdate && (
+              <UpdateVehiculoScreen
+                visible={showUpdateModal}
+                vehiculo={vehiculoToUpdate}
+                onCancel={handleCancelUpdate}
+                onUpdate={handleUpdateVehiculo}
+              />
+            )}
+          </>
         );
       default:
         return null;
@@ -113,9 +154,7 @@ export default function App() {
           Paso {step + 1} de {VehiculoFormStep.LAST_STEP + 1}
         </Text>
       </View>
-      <View style={styles.content}>
-        {renderCurrentStep()}
-      </View>
+      <View style={styles.content}>{renderCurrentStep()}</View>
       <StatusBar style="auto" />
     </View>
   );
